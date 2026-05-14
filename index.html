@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TriFusion Solutions — Federal IT Consulting</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Outfit:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:        #0D1117;
+    --bg2:       #141B24;
+    --bg3:       #1A2535;
+    --brass:     #B8924A;
+    --brass-lt:  #D4A85C;
+    --brass-dim: #7A6030;
+    --cream:     #EDE8DC;
+    --warm:      #C8BFA8;
+    --muted:     #6B7A8D;
+    --line:      rgba(184,146,74,.15);
+    --line2:     rgba(255,255,255,.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--bg);
+    color: var(--warm);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* grain overlay */
+  body::after {
+    content: '';
+    position: fixed; inset: 0; z-index: 9999;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--brass-dim); }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 6vw;
+    background: rgba(13,17,23,0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--cream);
+    text-decoration: none;
+    letter-spacing: .04em;
+  }
+  .logo em {
+    font-style: italic;
+    color: var(--brass-lt);
+  }
+
+  .nav-menu {
+    display: flex; align-items: center; gap: 3rem; list-style: none;
+  }
+  .nav-menu a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .68rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .nav-menu a:hover { color: var(--brass-lt); }
+
+  .nav-contact {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .68rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--brass);
+    border: 1px solid var(--brass-dim);
+    padding: .5rem 1.4rem;
+    text-decoration: none;
+    transition: all .25s;
+  }
+  .nav-contact:hover {
+    background: var(--brass);
+    color: var(--bg);
+    border-color: var(--brass);
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 6vw 7rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* animated diagonal grid */
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(184,146,74,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(184,146,74,.05) 1px, transparent 1px);
+    background-size: 80px 80px;
+    animation: gridDrift 20s linear infinite;
+  }
+  @keyframes gridDrift {
+    from { background-position: 0 0; }
+    to   { background-position: 80px 80px; }
+  }
+
+  /* large watermark letter */
+  .hero-watermark {
+    position: absolute;
+    top: 50%; right: 6vw;
+    transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18rem, 28vw, 34rem);
+    font-weight: 600;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(184,146,74,.08);
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -.02em;
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 860px; }
+
+  .hero-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .68rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 2rem;
+    display: flex; align-items: center; gap: .8rem;
+    animation: fadeUp .7s ease both;
+  }
+  .hero-tag::before {
+    content: '';
+    display: block; width: 28px; height: 1px; background: var(--brass);
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 7vw, 6.5rem);
+    font-weight: 600;
+    line-height: 1.0;
+    color: var(--cream);
+    letter-spacing: -.01em;
+    margin-bottom: 2rem;
+    animation: fadeUp .7s .15s ease both;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--brass-lt);
+  }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.85;
+    margin-bottom: 3rem;
+    animation: fadeUp .7s .3s ease both;
+  }
+
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp .7s .45s ease both;
+  }
+
+  .btn-primary {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .72rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    background: var(--brass);
+    color: var(--bg);
+    border: none;
+    padding: .9rem 2.2rem;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    transition: background .25s, transform .2s;
+  }
+  .btn-primary:hover { background: var(--brass-lt); transform: translateY(-2px); }
+
+  .btn-outline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .72rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--warm);
+    border: 1px solid var(--line2);
+    padding: .9rem 2.2rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color .25s, color .25s;
+  }
+  .btn-outline:hover { border-color: var(--warm); color: var(--cream); }
+
+  /* hero bottom stats bar */
+  .hero-stats {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+    background: rgba(13,17,23,.7);
+    backdrop-filter: blur(12px);
+    animation: fadeUp .7s .6s ease both;
+  }
+
+  .stat {
+    padding: 1.5rem 6vw;
+    border-right: 1px solid var(--line);
+  }
+  .stat:last-child { border-right: none; }
+
+  .stat-n {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--brass-lt);
+    line-height: 1;
+    margin-bottom: .2rem;
+  }
+  .stat-l {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .6rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ─── SECTION SHARED ─── */
+  .section { padding: 7rem 6vw; }
+  .section-alt { background: var(--bg2); }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .66rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: .8rem;
+    display: flex; align-items: center; gap: .6rem;
+  }
+  .eyebrow::before {
+    content: '';
+    display: block; width: 18px; height: 1px; background: var(--brass);
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 600;
+    color: var(--cream);
+    line-height: 1.1;
+    letter-spacing: -.01em;
+    margin-bottom: 1.2rem;
+  }
+  h2 em { font-style: italic; color: var(--brass-lt); }
+
+  .lead {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 540px;
+    line-height: 1.85;
+  }
+
+  hr.rule {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 0 6vw;
+  }
+
+  /* ─── ABOUT ─── */
+  #about .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    margin-top: 4rem;
+    align-items: start;
+  }
+
+  .about-body p {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.9;
+    margin-bottom: 1.25rem;
+  }
+  .about-body p strong {
+    color: var(--warm);
+    font-weight: 500;
+  }
+
+  .about-right {
+    display: flex; flex-direction: column; gap: 1rem;
+    padding-top: .5rem;
+  }
+
+  .credential {
+    display: flex; align-items: flex-start; gap: 1.25rem;
+    padding: 1.5rem;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.02);
+    transition: border-color .25s, background .25s;
+  }
+  .credential:hover {
+    border-color: var(--brass-dim);
+    background: rgba(184,146,74,.04);
+  }
+
+  .cred-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: .1rem;
+  }
+
+  .cred-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: .95rem;
+    color: var(--cream);
+    margin-bottom: .25rem;
+  }
+
+  .cred-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .65rem;
+    letter-spacing: .1em;
+    color: var(--muted);
+  }
+
+  /* ─── CAPABILITIES ─── */
+  #capabilities .cap-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+    align-items: end;
+  }
+
+  .cap-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+  }
+
+  .cap-card {
+    background: var(--bg2);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background .3s;
+  }
+  .cap-card:hover { background: var(--bg3); }
+
+  .cap-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--brass), transparent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform .4s ease;
+  }
+  .cap-card:hover::after { transform: scaleX(1); }
+
+  .cap-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 600;
+    color: rgba(184,146,74,.12);
+    line-height: 1;
+    margin-bottom: .75rem;
+    transition: color .3s;
+  }
+  .cap-card:hover .cap-num { color: rgba(184,146,74,.2); }
+
+  .cap-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: .75rem;
+    line-height: 1.2;
+  }
+
+  .cap-desc {
+    font-size: .88rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  /* ─── AGENCIES ─── */
+  #agencies .agency-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1px;
+    background: var(--line);
+    margin-top: 4rem;
+  }
+
+  .agency-block {
+    background: var(--bg);
+    flex: 1;
+    min-width: 180px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: background .25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .agency-block::before {
+    content: '';
+    position: absolute; top: 0; left: 50%; right: 50%;
+    height: 2px;
+    background: var(--brass);
+    transition: left .3s, right .3s;
+  }
+  .agency-block:hover { background: var(--bg2); }
+  .agency-block:hover::before { left: 0; right: 0; }
+
+  .agency-abbr {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--brass-lt);
+    margin-bottom: .5rem;
+  }
+  .agency-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .62rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ─── APPROACH ─── */
+  #approach .approach-list {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border: 1px solid var(--line);
+  }
+
+  .approach-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--line);
+    transition: background .25s;
+  }
+  .approach-row:last-child { border-bottom: none; }
+  .approach-row:hover { background: rgba(184,146,74,.03); }
+
+  .approach-idx {
+    padding: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--brass-dim);
+    border-right: 1px solid var(--line);
+    display: flex; align-items: center;
+  }
+
+  .approach-main {
+    padding: 2rem 2.5rem;
+    border-right: 1px solid var(--line);
+  }
+
+  .approach-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: .4rem;
+  }
+
+  .approach-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .62rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+
+  .approach-body {
+    padding: 2rem 2.5rem;
+    font-size: .9rem;
+    color: var(--muted);
+    line-height: 1.85;
+    display: flex; align-items: center;
+  }
+
+  /* ─── LEADERSHIP ─── */
+  #leadership .leader-card {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 0;
+    border: 1px solid var(--line);
+  }
+
+  .leader-left {
+    padding: 3rem;
+    border-right: 1px solid var(--line);
+    background: var(--bg2);
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .leader-monogram {
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--bg3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--brass-lt);
+    margin-bottom: 1.5rem;
+  }
+
+  .leader-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: .4rem;
+  }
+
+  .leader-role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .65rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 2rem;
+  }
+
+  .leader-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .ltag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .6rem;
+    letter-spacing: .08em;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    padding: .2rem .6rem;
+  }
+
+  .leader-right {
+    padding: 3rem;
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 2rem;
+  }
+
+  .leader-bio {
+    font-size: .95rem;
+    color: var(--muted);
+    line-height: 1.9;
+  }
+  .leader-bio strong { color: var(--warm); font-weight: 500; }
+
+  .career-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+  }
+
+  .career-stop {
+    background: var(--bg);
+    padding: 1.2rem 1.25rem;
+  }
+  .career-co {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: .85rem;
+    color: var(--cream);
+    margin-bottom: .2rem;
+  }
+  .career-role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .6rem;
+    letter-spacing: .08em;
+    color: var(--muted);
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--bg2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #contact::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,146,74,.05) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  #contact .inner {
+    max-width: 700px;
+    position: relative; z-index: 1;
+  }
+
+  .contact-links {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+  }
+
+  .contact-item {
+    background: var(--bg);
+    padding: 2rem 2.5rem;
+    text-decoration: none;
+    transition: background .25s;
+    display: block;
+  }
+  .contact-item:hover { background: var(--bg3); }
+
+  .contact-type {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .62rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: .5rem;
+  }
+  .contact-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--cream);
+  }
+  .contact-sub {
+    font-size: .82rem;
+    color: var(--muted);
+    margin-top: .2rem;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 2rem 6vw;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: var(--bg);
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--cream);
+  }
+  .footer-logo em { font-style: italic; color: var(--brass-lt); }
+
+  .footer-copy {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .6rem;
+    letter-spacing: .1em;
+    color: var(--muted);
+  }
+
+  .footer-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .footer-links a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .6rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .footer-links a:hover { color: var(--brass-lt); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    #about .about-grid,
+    #capabilities .cap-header,
+    .leader-card,
+    .contact-links { grid-template-columns: 1fr; }
+
+    .cap-grid { grid-template-columns: 1fr; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+    .approach-row { grid-template-columns: 60px 1fr; }
+    .approach-body { display: none; }
+    .career-track { grid-template-columns: 1fr 1fr; }
+    .nav-menu { display: none; }
+    .hero-watermark { opacity: .3; }
+    .agency-block { min-width: 120px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Tri<em>Fusion</em> Solutions</a>
+  <ul class="nav-menu">
+    <li><a href="#about">About</a></li>
+    <li><a href="#capabilities">Capabilities</a></li>
+    <li><a href="#agencies">Agencies</a></li>
+    <li><a href="#leadership">Leadership</a></li>
+  </ul>
+  <a href="#contact" class="nav-contact">Contact Us</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-watermark">TF</div>
+
+  <div class="hero-content">
+    <div class="hero-tag">Federal IT Management Consulting · DHS Anchor · Federal Civilian Reach</div>
+    <h1>Mission Systems.<br /><em>Delivered.</em></h1>
+    <p class="hero-desc">
+      TriFusion brings federal executive leadership to every engagement — 
+      P&L ownership, client relationships, BD strategy, and delivery oversight across 
+      DHS and federal civilian agencies that cannot afford to get it wrong.
+    </p>
+    <div class="hero-ctas">
+      <a href="#capabilities" class="btn-primary">Our Capabilities</a>
+      <a href="#about" class="btn-outline">About TriFusion</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-n">20+</div>
+      <div class="stat-l">Years Federal IT</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">5</div>
+      <div class="stat-l">DHS Agency Components</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">$150M+</div>
+      <div class="stat-l">Portfolio Managed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">SAM.gov</div>
+      <div class="stat-l">Active Registration</div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule"/>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="eyebrow">Who We Are</div>
+  <h2>Boutique Precision.<br /><em>Federal-Grade</em> Execution.</h2>
+
+  <div class="about-grid">
+    <div class="about-body">
+      <p>
+        TriFusion Solutions is a <strong>boutique federal IT management consulting firm</strong> 
+        headquartered in Fairfax, Virginia. We specialize in the Department of Homeland Security 
+        enterprise — bringing principal-level expertise to every engagement, not junior staff 
+        operating behind a senior nameplate.
+      </p>
+      <p>
+        We exist because the federal market has too many firms promising executive leadership and delivering project managers two levels down. Real P&L accountability, senior client relationships, and domain expertise at the executive level — that is what TriFusion brings. <strong>At TriFusion, the partner is on the work.</strong> 
+        That means faster decisions, sharper strategy, and outcomes that hold up under COR scrutiny.
+      </p>
+      <p>
+        Our deepest domain is DHS — ICE, USCIS, USCG, CISA, and OIG — where two decades of program delivery has built institutional knowledge no generalist can replicate. We extend that senior program management expertise to federal civilian agencies with identical IT modernization needs.
+      </p>
+    </div>
+
+    <div class="about-right">
+      <div class="credential">
+        <div class="cred-icon">🏛️</div>
+        <div>
+          <div class="cred-title">DHS Specialist</div>
+          <div class="cred-sub">ICE · USCIS · USCG · CISA · OIG</div>
+        </div>
+      </div>
+      <div class="credential">
+        <div class="cred-icon">📋</div>
+        <div>
+          <div class="cred-title">SAM.gov Registered LLC</div>
+          <div class="cred-sub">Active Registration · Fairfax, VA</div>
+        </div>
+      </div>
+      <div class="credential">
+        <div class="cred-icon">🔐</div>
+        <div>
+          <div class="cred-title">Cleared Talent Network</div>
+          <div class="cred-sub">Security-cleared professionals across DHS programs</div>
+        </div>
+      </div>
+      <div class="credential">
+        <div class="cred-icon">🎓</div>
+        <div>
+          <div class="cred-title">Graduate-Level Leadership</div>
+          <div class="cred-sub">MBA (UMD) · MS/BS Information Sciences (Penn State)</div>
+        </div>
+      </div>
+      <div class="credential">
+        <div class="cred-icon">🤝</div>
+        <div>
+          <div class="cred-title">Prime & Sub Teaming</div>
+          <div class="cred-sub">Trusted partner on DHS IDIQs and BPA vehicles</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule"/>
+
+<!-- CAPABILITIES -->
+<section id="capabilities" class="section section-alt">
+  <div class="cap-header">
+    <div>
+      <div class="eyebrow">What We Do</div>
+      <h2>Core <em>Capabilities</em></h2>
+    </div>
+    <p class="lead">
+      Every service line is built from actual program delivery experience — 
+      not lifted from a capability framework. We offer what we have genuinely done.
+    </p>
+  </div>
+
+  <div class="cap-grid">
+    <div class="cap-card">
+      <div class="cap-num">01</div>
+      <div class="cap-title">IT Modernization &amp; Program Management</div>
+      <p class="cap-desc">Executive-level P&amp;L ownership across enterprise modernization — legacy migration, system integration, program governance, and senior stakeholder management for DHS mission-critical platforms.</p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-num">02</div>
+      <div class="cap-title">DevSecOps &amp; Agile Delivery</div>
+      <p class="cap-desc">Executive leadership of DevSecOps and Agile delivery programs — P&L ownership, vendor management, COR relationships, and ATO/RMF oversight. Strategic direction from an executive who has delivered these programs at scale.</p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-num">03</div>
+      <div class="cap-title">Acquisition & Capture Strategy</div>
+      <p class="cap-desc">PWS review, LCAT modeling, proposal development, competitive intelligence, and teaming partner evaluation for DHS and federal civilian agency procurements.</p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-num">04</div>
+      <div class="cap-title">Cleared Staff Augmentation</div>
+      <p class="cap-desc">Rapid placement of cleared IT professionals — PMs, Solutions Architects, Engineers, and QA Analysts — across DHS and federal civilian T&M and FFP task orders.</p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-num">05</div>
+      <div class="cap-title">Contract Financial Analytics</div>
+      <p class="cap-desc">LCAT cost modeling, billing rate analysis, Unanet-based financial reporting, and workforce optimization to protect margin and support recompete strategy.</p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-num">06</div>
+      <div class="cap-title">GovCon Advisory Retainer</div>
+      <p class="cap-desc">Retained advisory for mid-size GovCon firms building a DHS practice — BD strategy, relationship mapping, proposal review, and competitive positioning.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule"/>
+
+<!-- AGENCIES -->
+<section id="agencies" class="section">
+  <div class="eyebrow">Where We Work</div>
+  <h2><em>Federal</em> Agency Focus</h2>
+  <p class="lead">
+    Deep DHS specialization across five agency components — with federal civilian agency reach 
+    across GSA, HHS, DOJ, State, and beyond.
+  </p>
+
+  <div class="agency-wrap">
+    <div class="agency-block">
+      <div class="agency-abbr">ICE</div>
+      <div class="agency-name">Immigration &amp;<br/>Customs Enforcement</div>
+    </div>
+    <div class="agency-block">
+      <div class="agency-abbr">USCIS</div>
+      <div class="agency-name">US Citizenship &amp;<br/>Immigration Services</div>
+    </div>
+    <div class="agency-block">
+      <div class="agency-abbr">USCG</div>
+      <div class="agency-name">United States<br/>Coast Guard</div>
+    </div>
+    <div class="agency-block">
+      <div class="agency-abbr">CISA</div>
+      <div class="agency-name">Cybersecurity &amp;<br/>Infrastructure Security</div>
+    </div>
+    <div class="agency-block">
+      <div class="agency-abbr">OIG</div>
+      <div class="agency-name">Office of<br/>Inspector General</div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule"/>
+
+<!-- APPROACH -->
+<section id="approach" class="section section-alt">
+  <div class="eyebrow">How We Operate</div>
+  <h2>The TriFusion <em>Approach</em></h2>
+
+  <div class="approach-list">
+    <div class="approach-row">
+      <div class="approach-idx">1</div>
+      <div class="approach-main">
+        <div class="approach-title">Senior Leadership on Every Engagement</div>
+        <div class="approach-tag">No Bait-and-Switch</div>
+      </div>
+      <div class="approach-body">
+        The executive who wins the work owns the relationship and the P&L. 
+        No handoff to junior staff after contract award — accountability stays at the top.
+      </div>
+    </div>
+    <div class="approach-row">
+      <div class="approach-idx">2</div>
+      <div class="approach-main">
+        <div class="approach-title">DHS-Anchored, Federally Capable</div>
+        <div class="approach-tag">Deep Roots, Broad Reach</div>
+      </div>
+      <div class="approach-body">
+        DHS is our deepest domain and primary competitive advantage. We extend that expertise to federal civilian agencies where IT modernization needs and contract mechanics are identical.
+      </div>
+    </div>
+    <div class="approach-row">
+      <div class="approach-idx">3</div>
+      <div class="approach-main">
+        <div class="approach-title">Methodologies Proven in Production</div>
+        <div class="approach-tag">Earned IP</div>
+      </div>
+      <div class="approach-body">
+        Our playbooks — DevSecOps program oversight, LCAT modeling, CPARS documentation — 
+        were built on real programs, not adapted from consulting textbooks.
+      </div>
+    </div>
+    <div class="approach-row">
+      <div class="approach-idx">4</div>
+      <div class="approach-main">
+        <div class="approach-title">Relationships Built Over Decades</div>
+        <div class="approach-tag">Network as Infrastructure</div>
+      </div>
+      <div class="approach-body">
+        Our teaming network, agency relationships, and cleared talent bench took twenty 
+        years to build. That's the moat no competitor can replicate quickly.
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule"/>
+
+<!-- LEADERSHIP -->
+<section id="leadership" class="section">
+  <div class="eyebrow">Who Leads the Work</div>
+  <h2><em>Principal</em> Leadership</h2>
+
+  <div class="leader-card">
+    <div class="leader-left">
+      <div>
+        <div class="leader-monogram">YA</div>
+        <div class="leader-name">Yusuf<br/>Raza</div>
+        <div class="leader-role">Founder & Managing Principal</div>
+      </div>
+      <div>
+        <div class="leader-tags">
+          <span class="ltag">DHS Portfolio</span>
+          <span class="ltag">Program Management</span>
+          <span class="ltag">DevSecOps Oversight</span>
+          <span class="ltag">BD & Capture</span>
+          <span class="ltag">MBA · UMD</span>
+          <span class="ltag">Penn State</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="leader-right">
+      <div class="leader-bio">
+        Yusuf brings <strong>over twenty years of federal IT executive leadership</strong> to TriFusion — 
+        owning P&amp;L, managing senior client relationships, directing BD strategy, and leading 150+ person organizations. Programs span 
+        ICE, USCIS, USCG, CISA, and OIG — managing portfolios of 150+ personnel and 
+        directing BD and capture operations across multi-million dollar contract vehicles.<br/><br/>
+        His career spans senior roles at <strong>Booz Allen Hamilton, Excella, SRA International, 
+        and Freddie Mac</strong>, giving him a rare combination of large-firm rigor and 
+        the agility to execute at the boutique level. He founded TriFusion to bring that 
+        senior-principal model directly to agencies and partners who need it most.
+      </div>
+
+      <div class="career-track">
+        <div class="career-stop">
+          <div class="career-co">Booz Allen Hamilton</div>
+          <div class="career-role">Senior Consultant</div>
+        </div>
+        <div class="career-stop">
+          <div class="career-co">SRA International</div>
+          <div class="career-role">Program Lead</div>
+        </div>
+        <div class="career-stop">
+          <div class="career-co">Excella</div>
+          <div class="career-role">Senior Director</div>
+        </div>
+        <div class="career-stop">
+          <div class="career-co">Alpha Omega</div>
+          <div class="career-role">Sr. Director · DHS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule"/>
+
+<!-- CONTACT -->
+<section id="contact" class="section section-alt">
+  <div class="inner">
+    <div class="eyebrow">Get in Touch</div>
+    <h2>Let's Talk About<br /><em>Your Program.</em></h2>
+    <p class="lead">
+      Whether you're looking for a teaming partner, a retained advisor, 
+      or cleared staff augmentation — the conversation starts here.
+    </p>
+
+    <div class="contact-links">
+      <a href="mailto:info@trifusionco.com" class="contact-item">
+        <div class="contact-type">Email</div>
+        <div class="contact-val">info@trifusionco.com</div>
+        <div class="contact-sub">General inquiries & teaming</div>
+      </a>
+      <a href="https://trifusionco.com" target="_blank" class="contact-item">
+        <div class="contact-type">Web</div>
+        <div class="contact-val">trifusionco.com</div>
+        <div class="contact-sub">Capabilities statement available</div>
+      </a>
+      <a href="#" class="contact-item">
+        <div class="contact-type">Location</div>
+        <div class="contact-val">Fairfax, Virginia</div>
+        <div class="contact-sub">Greater DC Metro · National Reach</div>
+      </a>
+      <a href="https://linkedin.com" target="_blank" class="contact-item">
+        <div class="contact-type">LinkedIn</div>
+        <div class="contact-val">TriFusion Solutions</div>
+        <div class="contact-sub">Company page & leadership profile</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Tri<em>Fusion</em> Solutions</div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#capabilities">Capabilities</a></li>
+    <li><a href="#agencies">Agencies</a></li>
+    <li><a href="#leadership">Leadership</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 TriFusion Solutions LLC · Fairfax, VA · SAM.gov Registered</div>
+</footer>
+
+</body>
+</html>
