@@ -3,21 +3,41 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>TriFusion Solutions — Federal IT Consulting</title>
+<meta name="description" content="TriFusion Solutions is a federal IT management consulting firm delivering executive-level program leadership, DevSecOps, and acquisition strategy across federal agencies. Based in Fairfax, VA."/>
+<title>TriFusion Solutions | Federal IT Management Consulting | Fairfax, VA</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Outfit:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --bg:        #0D1117;
-    --bg2:       #141B24;
-    --bg3:       #1A2535;
+    --bg:        #151C26;
+    --bg2:       #1B2436;
+    --bg3:       #213048;
     --brass:     #B8924A;
     --brass-lt:  #D4A85C;
     --brass-dim: #7A6030;
     --cream:     #EDE8DC;
-    --warm:      #C8BFA8;
-    --muted:     #6B7A8D;
+    --warm:      #CEC7B5;
+    --muted:     #838b9b;
     --line:      rgba(184,146,74,.15);
     --line2:     rgba(255,255,255,.06);
+  }
+
+  /* ─── SKIP NAV (508) ─── */
+  .skip-nav {
+    position: absolute;
+    top: -100px;
+    left: 1rem;
+    background: var(--brass);
+    color: var(--bg);
+    padding: .75rem 1.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .8rem;
+    font-weight: 700;
+    text-decoration: none;
+    z-index: 9999;
+    transition: top .2s;
+  }
+  .skip-nav:focus {
+    top: 1rem;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,6 +60,17 @@
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
     opacity: 0.5;
+  }
+
+  /* ─── FOCUS STYLES (508) ─── */
+  :focus-visible {
+    outline: 3px solid var(--brass-lt);
+    outline-offset: 3px;
+  }
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--brass-lt);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 
   /* ─── SCROLLBAR ─── */
@@ -107,7 +138,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 0 6vw 7rem;
+    padding: 0 6vw 9rem;
     position: relative;
     overflow: hidden;
   }
@@ -233,7 +264,7 @@
   }
 
   .stat {
-    padding: 1.5rem 6vw;
+    padding: 2rem 6vw;
     border-right: 1px solid var(--line);
   }
   .stat:last-child { border-right: none; }
@@ -323,7 +354,7 @@
 
   .credential {
     display: flex; align-items: flex-start; gap: 1.25rem;
-    padding: 1.5rem;
+    padding: 1.75rem;
     border: 1px solid var(--line);
     background: rgba(255,255,255,.02);
     transition: border-color .25s, background .25s;
@@ -372,7 +403,7 @@
 
   .cap-card {
     background: var(--bg2);
-    padding: 2.5rem 2rem;
+    padding: 3rem 2.5rem;
     position: relative;
     overflow: hidden;
     transition: background .3s;
@@ -429,7 +460,7 @@
     background: var(--bg);
     flex: 1;
     min-width: 180px;
-    padding: 2.5rem 2rem;
+    padding: 3rem 2.5rem;
     text-align: center;
     transition: background .25s;
     position: relative;
@@ -491,7 +522,7 @@
   }
 
   .approach-main {
-    padding: 2rem 2.5rem;
+    padding: 2.5rem 3rem;
     border-right: 1px solid var(--line);
   }
 
@@ -512,7 +543,7 @@
   }
 
   .approach-body {
-    padding: 2rem 2.5rem;
+    padding: 2.5rem 3rem;
     font-size: .9rem;
     color: var(--muted);
     line-height: 1.85;
@@ -648,7 +679,7 @@
 
   .contact-item {
     background: var(--bg);
-    padding: 2rem 2.5rem;
+    padding: 2.5rem 3rem;
     text-decoration: none;
     transition: background .25s;
     display: block;
@@ -743,7 +774,8 @@
 <body>
 
 <!-- NAV -->
-<nav>
+<a href="#main-content" class="skip-nav">Skip to main content</a>
+<nav aria-label="Main navigation">
   <a href="#" class="logo">Tri<em>Fusion</em> Solutions</a>
   <ul class="nav-menu">
     <li><a href="#about">About</a></li>
@@ -755,9 +787,10 @@
 </nav>
 
 <!-- HERO -->
+<main id="main-content">
 <section id="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-watermark">TF</div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-watermark" aria-hidden="true">TF</div>
 
   <div class="hero-content">
     <div class="hero-tag">Federal IT Management Consulting · Fairfax, VA</div>
@@ -1061,22 +1094,22 @@
     </p>
 
     <div class="contact-links">
-      <a href="mailto:info@trifusionco.com" class="contact-item">
+      <a href="mailto:info@trifusionco.com" class="contact-item" aria-label="Send email to info@trifusionco.com">
         <div class="contact-type">Email</div>
         <div class="contact-val">info@trifusionco.com</div>
         <div class="contact-sub">General inquiries & teaming</div>
       </a>
-      <a href="https://trifusionco.com" target="_blank" class="contact-item">
+      <a href="https://trifusionco.com" target="_blank" rel="noopener noreferrer" class="contact-item" aria-label="Visit trifusionco.com website (opens in new tab)" rel="noopener">
         <div class="contact-type">Web</div>
         <div class="contact-val">trifusionco.com</div>
         <div class="contact-sub">Capabilities statement available</div>
       </a>
-      <a href="#" class="contact-item">
+      <a href="#" class="contact-item" aria-label="Office location: Fairfax, Virginia">
         <div class="contact-type">Location</div>
         <div class="contact-val">Fairfax, Virginia</div>
         <div class="contact-sub">Greater DC Metro · National Reach</div>
       </a>
-      <a href="https://linkedin.com" target="_blank" class="contact-item">
+      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="contact-item">
         <div class="contact-type">LinkedIn</div>
         <div class="contact-val">TriFusion Solutions</div>
         <div class="contact-sub">Company page & leadership profile</div>
@@ -1085,6 +1118,7 @@
   </div>
 </section>
 
+</main>
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Tri<em>Fusion</em> Solutions</div>
