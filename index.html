@@ -761,13 +761,46 @@
     .contact-links { grid-template-columns: 1fr; }
 
     .cap-grid { grid-template-columns: 1fr; }
-    .hero-stats { grid-template-columns: 1fr 1fr; }
+
+    /* Fix stat bar overlap with nav on mobile */
+    .hero-stats {
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      z-index: 1;
+    }
+    .stat {
+      padding: 1.25rem 1.5rem;
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+    }
+    .stat:nth-child(odd) {
+      border-right: 1px solid var(--line);
+    }
+    .stat-n { font-size: 1.5rem; }
+    .stat-l { font-size: .55rem; }
+
+    /* Hero section padding on mobile */
+    #hero {
+      padding: 0 6vw 0;
+      min-height: 100vh;
+    }
+    .hero-content {
+      padding-top: 8rem;
+      padding-bottom: 1rem;
+    }
+
     .approach-row { grid-template-columns: 60px 1fr; }
     .approach-body { display: none; }
     .career-track { grid-template-columns: 1fr 1fr; }
     .nav-menu { display: none; }
     .hero-watermark { opacity: .3; }
     .agency-block { min-width: 120px; }
+
+    /* Nav z-index on mobile */
+    nav { z-index: 200; }
+
+    /* Hero h1 size on mobile */
+    h1 { font-size: clamp(2.4rem, 11vw, 4rem); }
   }
 </style>
 </head>
