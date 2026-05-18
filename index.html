@@ -143,35 +143,11 @@
     overflow: hidden;
   }
 
-  /* animated diagonal grid */
-  .hero-grid {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(184,146,74,.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(184,146,74,.05) 1px, transparent 1px);
-    background-size: 80px 80px;
-    animation: gridDrift 20s linear infinite;
-  }
-  @keyframes gridDrift {
-    from { background-position: 0 0; }
-    to   { background-position: 80px 80px; }
-  }
+  /* grid removed */
+  .hero-grid { display: none; }
 
-  /* large watermark letter */
-  .hero-watermark {
-    position: absolute;
-    top: 50%; right: 6vw;
-    transform: translateY(-50%);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(18rem, 28vw, 34rem);
-    font-weight: 600;
-    line-height: 1;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(184,146,74,.08);
-    pointer-events: none;
-    user-select: none;
-    letter-spacing: -.02em;
-  }
+  /* watermark removed */
+  .hero-watermark { display: none; }
 
   .hero-content { position: relative; z-index: 2; max-width: 860px; }
 
@@ -755,52 +731,145 @@
 
   /* ─── RESPONSIVE ─── */
   @media (max-width: 900px) {
+    /* ── Layout ── */
     #about .about-grid,
     #capabilities .cap-header,
     .leader-card,
     .contact-links { grid-template-columns: 1fr; }
 
     .cap-grid { grid-template-columns: 1fr; }
+    .differentiators { grid-template-columns: 1fr 1fr; }
+    .career-track { grid-template-columns: 1fr 1fr; }
+    .agency-wrap { flex-wrap: wrap; }
+    .agency-block { min-width: 140px; flex: 1 1 140px; }
 
-    /* Fix stat bar overlap with nav on mobile */
+    /* ── Nav ── */
+    nav {
+      z-index: 200;
+      padding: 1rem 5vw;
+    }
+    .nav-menu { display: none; }
+
+    /* ── Hero ── */
+    #hero {
+      min-height: 100svh;
+      padding: 0 5vw 0;
+      justify-content: flex-start;
+    }
+    .hero-content {
+      padding-top: 7rem;
+      padding-bottom: 1.5rem;
+    }
+    h1 {
+      font-size: clamp(2.6rem, 10vw, 4rem);
+      line-height: 1.05;
+    }
+    .hero-desc {
+      font-size: .95rem;
+      margin-bottom: 2rem;
+    }
+    .hero-ctas {
+      flex-direction: column;
+      gap: .75rem;
+    }
+    .btn-primary, .btn-outline {
+      text-align: center;
+      width: 100%;
+      padding: 1rem 1.5rem;
+    }
+
+    /* ── Stats bar ── */
     .hero-stats {
       grid-template-columns: 1fr 1fr;
       position: relative;
       z-index: 1;
     }
     .stat {
-      padding: 1.25rem 1.5rem;
+      padding: 1.25rem 1.25rem;
       border-right: none;
       border-bottom: 1px solid var(--line);
     }
-    .stat:nth-child(odd) {
-      border-right: 1px solid var(--line);
-    }
-    .stat-n { font-size: 1.5rem; }
+    .stat:nth-child(odd) { border-right: 1px solid var(--line); }
+    .stat-n { font-size: 1.4rem; }
     .stat-l { font-size: .55rem; }
 
-    /* Hero section padding on mobile */
-    #hero {
-      padding: 0 6vw 0;
-      min-height: 100vh;
-    }
-    .hero-content {
-      padding-top: 8rem;
-      padding-bottom: 1rem;
-    }
+    /* ── Sections ── */
+    section { padding: 4rem 5vw; }
+    h2 { font-size: clamp(1.8rem, 7vw, 2.6rem); }
 
-    .approach-row { grid-template-columns: 60px 1fr; }
+    /* ── Capabilities ── */
+    .cap-card { padding: 2rem 1.5rem; }
+
+    /* ── Approach ── */
+    .approach-row { grid-template-columns: 55px 1fr; }
     .approach-body { display: none; }
-    .career-track { grid-template-columns: 1fr 1fr; }
-    .nav-menu { display: none; }
-    .hero-watermark { opacity: .3; }
-    .agency-block { min-width: 120px; }
+    .approach-idx { padding: 1.5rem 1rem; }
+    .approach-main { padding: 1.5rem; }
 
-    /* Nav z-index on mobile */
-    nav { z-index: 200; }
+    /* ── Leadership ── */
+    #leadership .leader-card {
+      display: block !important;
+      grid-template-columns: 1fr !important;
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+    .leader-left {
+      padding: 2rem;
+      border-right: none !important;
+      border-bottom: 1px solid var(--line);
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .leader-right {
+      padding: 2rem;
+      width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .leader-bio {
+      font-size: .9rem;
+      line-height: 1.75;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      max-width: 100%;
+    }
+    .career-track {
+      grid-template-columns: 1fr 1fr;
+    }
 
-    /* Hero h1 size on mobile */
-    h1 { font-size: clamp(2.4rem, 11vw, 4rem); }
+    /* ── Contact ── */
+    .contact-links { gap: 1px; }
+    .contact-item { padding: 1.5rem; }
+
+    /* ── Footer ── */
+    footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 2rem 5vw;
+    }
+    .footer-links {
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: 900px) {
+    #values > div[style*="grid-template-columns:repeat(5"] {
+      grid-template-columns: 1fr 1fr !important;
+    }
+  }
+
+  /* ── Extra small screens ── */
+  @media (max-width: 480px) {
+    .differentiators { grid-template-columns: 1fr; }
+    .career-track { grid-template-columns: 1fr; }
+    .agency-block { min-width: 100px; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+    nav { padding: .85rem 4vw; }
+    .logo { font-size: 1.2rem; }
+    .nav-cta { padding: .45rem 1rem; font-size: .65rem; }
   }
 </style>
 </head>
@@ -815,6 +884,7 @@
     <li><a href="#capabilities">Capabilities</a></li>
     <li><a href="#agencies">Agencies</a></li>
     <li><a href="#leadership">Leadership</a></li>
+    <li><a href="#values">Values</a></li>
   </ul>
   <a href="#contact" class="nav-contact">Contact Us</a>
 </nav>
@@ -827,7 +897,7 @@
 
   <div class="hero-content">
     <div class="hero-tag">Federal IT Management Consulting · Fairfax, VA</div>
-    <h1>Federal Programs.<br /><em>Run Right.</em></h1>
+    <h1>Lead. Deliver.<br /><em>Win.</em></h1>
     <p class="hero-desc">
       TriFusion brings federal executive leadership to every engagement — 
       P&L ownership, senior client relationships, BD strategy, and delivery oversight 
@@ -1070,7 +1140,7 @@
   <div class="leader-card">
     <div class="leader-left">
       <div>
-        <div class="leader-monogram">YA</div>
+        <div class="leader-monogram">YR</div>
         <div class="leader-name">Yusuf<br/>Raza</div>
         <div class="leader-role">Founder & Managing Principal</div>
       </div>
@@ -1152,6 +1222,66 @@
 </section>
 
 </main>
+
+<hr class="divider"/>
+
+<!-- MERIT VALUES -->
+<section id="values" style="background:var(--bg2);">
+  <div class="eyebrow">What We Stand For</div>
+  <h2>The <em>MERIT</em> Framework</h2>
+  <p class="lead">Our name means something. These five principles define how TriFusion operates on every engagement — and how we hold ourselves accountable.</p>
+
+  <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:rgba(184,146,74,.12); margin-top:3.5rem;">
+
+    <div style="background:var(--bg); padding:2.5rem 1.75rem; position:relative; overflow:hidden; transition:background .3s;" onmouseover="this.style.background='var(--bg2)'" onmouseout="this.style.background='var(--bg)'">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:600; color:rgba(184,146,74,.15); line-height:1; margin-bottom:.5rem;">M</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:600; color:var(--cream); margin-bottom:.5rem;">Mission Focus</div>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--brass); margin-bottom:.75rem;">The Why</div>
+      <p style="font-size:.88rem; color:var(--muted); line-height:1.8;">We serve agencies with missions that matter. Every engagement is oriented around client outcomes, not billable hours.</p>
+    </div>
+
+    <div style="background:var(--bg); padding:2.5rem 1.75rem; position:relative; overflow:hidden; transition:background .3s;" onmouseover="this.style.background='var(--bg2)'" onmouseout="this.style.background='var(--bg)'">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:600; color:rgba(184,146,74,.15); line-height:1; margin-bottom:.5rem;">E</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:600; color:var(--cream); margin-bottom:.5rem;">Execution</div>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--brass); margin-bottom:.75rem;">The How</div>
+      <p style="font-size:.88rem; color:var(--muted); line-height:1.8;">We deliver, not just advise. Strategy means nothing without the discipline to see it through to measurable results.</p>
+    </div>
+
+    <div style="background:var(--bg); padding:2.5rem 1.75rem; position:relative; overflow:hidden; transition:background .3s;" onmouseover="this.style.background='var(--bg2)'" onmouseout="this.style.background='var(--bg)'">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:600; color:rgba(184,146,74,.15); line-height:1; margin-bottom:.5rem;">R</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:600; color:var(--cream); margin-bottom:.5rem;">Relationships</div>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--brass); margin-bottom:.75rem;">The Foundation</div>
+      <p style="font-size:.88rem; color:var(--muted); line-height:1.8;">Trust is built over decades, not manufactured overnight. Our relationships are the infrastructure everything else runs on.</p>
+    </div>
+
+    <div style="background:var(--bg); padding:2.5rem 1.75rem; position:relative; overflow:hidden; transition:background .3s;" onmouseover="this.style.background='var(--bg2)'" onmouseout="this.style.background='var(--bg)'">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:600; color:rgba(184,146,74,.15); line-height:1; margin-bottom:.5rem;">I</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:600; color:var(--cream); margin-bottom:.5rem;">Integrity</div>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--brass); margin-bottom:.75rem;">The Standard</div>
+      <p style="font-size:.88rem; color:var(--muted); line-height:1.8;">We tell clients what they need to hear. Honest counsel, even when it's uncomfortable, is what earns long-term trust.</p>
+    </div>
+
+    <div style="background:var(--bg); padding:2.5rem 1.75rem; position:relative; overflow:hidden; transition:background .3s;" onmouseover="this.style.background='var(--bg2)'" onmouseout="this.style.background='var(--bg)'">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:600; color:rgba(184,146,74,.15); line-height:1; margin-bottom:.5rem;">T</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:600; color:var(--cream); margin-bottom:.5rem;">Trust</div>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--brass); margin-bottom:.75rem;">The Result</div>
+      <p style="font-size:.88rem; color:var(--muted); line-height:1.8;">Trust is not claimed — it is earned through performance, consistency, and accountability on every engagement, every time.</p>
+    </div>
+
+  </div>
+
+  <!-- Tagline bar -->
+  <div style="margin-top:3rem; padding:2rem 3rem; background:var(--bg3); border-left:3px solid var(--brass); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:.65rem; letter-spacing:.2em; text-transform:uppercase; color:var(--brass); margin-bottom:.4rem;">Our Commitment</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:600; color:var(--cream);">Lead. Deliver. <em style="color:var(--brass-lt);">Win.</em></div>
+    </div>
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:.7rem; letter-spacing:.1em; color:var(--muted); max-width:400px; line-height:1.8;">
+      TriFusion was built on the belief that federal agencies deserve senior leadership on their most important programs — not promises made by one person and delivered by another.
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Tri<em>Fusion</em> Solutions</div>
@@ -1160,9 +1290,10 @@
     <li><a href="#capabilities">Capabilities</a></li>
     <li><a href="#agencies">Agencies</a></li>
     <li><a href="#leadership">Leadership</a></li>
+    <li><a href="#values">Values</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <div class="footer-copy">© 2026 TriFusion Solutions LLC · Fairfax, VA · SAM.gov Registered</div>
+  <div class="footer-copy">Lead. Deliver. Win.  ·  © 2026 TriFusion Solutions LLC · Fairfax, VA</div>
 </footer>
 
 </body>
